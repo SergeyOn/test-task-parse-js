@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+
+  <style>
+  
+  #input {
+    margin-top: 20px;
+  }
+  .container {
+    display: flex;
+    max-width: 80%;
+    justify-content: space-between;
+  }
+
+  .block {
+    min-height: 600px;
+    max-height: 600px;
+    width: 35%;
+    overflow: hidden;
+  }
+
+ .inner{
+  border: 1px solid #000;
+  width: 99%;
+  margin-top: 10px;
+  min-height: 300px;
+  max-height: 600px;
+  overflow: auto;
+ }
+  </style>
+  
+  <input type="text" id="url" placeholder="input url">
+
+
+  <div class="container">
+      <div class="block">
+        <h2>before</h2>
+          <div id="before" class="inner"></div>
+      </div>
+      <div class="block">
+          <h2>after</h2>
+          <div id="after"  class="inner"></div>
+      </div>
+  </div>
+
+  <div id="statusload"></div>
+
+  <button id="exec" >execute</button>
+<script>
+
+
+
+const replaceComments = async url => {
+
+let text;
+
+try {
+  window.statusload.innerText = 'file loading start';
+  const response = await fetch(url);
+if (!response.ok) {
+  window.statusload.innerText = `error - ${response.statusloadText}`;
+    throw new Error(response.statusloadText);
+  }
+  text = await response.text();
+} catch (err) {
+  window.statusload.innerText = `error - ${err.message}`;
+  throw new Error(err);
+}
+
+window.statusload.innerText = 'file loaded';
+
+
+const regExp = /\/\*(.|\n)*?\*\/|(?<![\\,",',`])\/{2}.*?\n/gms;
+const parsed = text.replace(regExp, '');
+
+const diff = {
+  before: text,
+  after: parsed,
+};
+
+window.before.innerText = diff.before;
+window.after.innerText = diff.after;
+
+return new Function(parsed)();
+
+};
+
+window.exec.addEventListener('click', ()=>{
+  replaceComments(window.url.value);
+});
+
+
+</script>
+
+</body>
+</html>
