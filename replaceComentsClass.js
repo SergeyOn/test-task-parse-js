@@ -22,7 +22,7 @@ class ReplaceComments {
   showData = () => ({
     before: this.text,
     after: this.parsed,
-    function: this.resultFunc,
+    resultFunc: this.resultFunc,
   });
 
   parseText = () => this.text.replace(this.regExp, '');
