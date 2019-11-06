@@ -11,20 +11,24 @@
 
   <style>
   
-  #input {
+  #url {
     margin-top: 20px;
+    width: 100%;
   }
   .container {
     display: flex;
     max-width: 80%;
     justify-content: space-between;
+    margin: 0 auto;
+    flex-wrap: wrap;
   }
 
   .block {
-    min-height: 600px;
+    min-height: 300px;
     max-height: 600px;
-    width: 35%;
+    width: 49%;
     overflow: hidden;
+    padding-bottom: 100px;
   }
 
  .inner{
@@ -33,14 +37,14 @@
   margin-top: 10px;
   min-height: 300px;
   max-height: 600px;
-  overflow: auto;
+  overflow-Y: auto;
+  overflow-X: hidden;
  }
   </style>
   
-  <input type="text" id="url" placeholder="input url">
-
 
   <div class="container">
+      <input type="text" id="url" placeholder="input url">
       <div class="block">
         <h2>before</h2>
           <div id="before" class="inner"></div>
@@ -49,11 +53,10 @@
           <h2>after</h2>
           <div id="after"  class="inner"></div>
       </div>
+      <button id="exec" >execute</button>
+      <div id="statusload"></div>    
   </div>
 
-  <div id="statusload"></div>
-
-  <button id="exec" >execute</button>
 <script>
 
 
